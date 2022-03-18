@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import Payment
@@ -20,6 +21,10 @@ def process_payment(request):
 
             with transaction.atomic():
                 payer.balance -= z
+                if payer.balance < 0:
+                    raise ValidationError(
+                        "Bad amount!"
+                    )
                 payer.save()
 
                 payee.balance += z

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'transaction',
+    'customers',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +104,8 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+AUTH_USER_MODEL = 'customers.CustomUser'
 
 STATIC_URL = 'static/'
 
