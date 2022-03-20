@@ -19,5 +19,5 @@ from transaction import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.process_payment),
+    path('api/v1/', include('transaction.urls')),
 ]

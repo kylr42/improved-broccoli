@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class CustomUserManager(BaseUserManager):
+class CustomerManager(BaseUserManager):
 
     def create_user(self, email, password, **extra_fields):
         if not email:
@@ -27,7 +27,7 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class CustomUser(AbstractUser):
+class Customer(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
     balance = models.DecimalField(_('customers balance'), max_digits=6, decimal_places=2, default=0)
@@ -35,7 +35,7 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
+    objects = CustomerManager()
 
     def __str__(self):
         return self.email

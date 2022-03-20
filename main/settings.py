@@ -31,6 +31,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'drf_yasg',
+    
     'transaction',
     'customers',
 ]
@@ -105,7 +108,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-AUTH_USER_MODEL = 'customers.CustomUser'
+AUTH_USER_MODEL = 'customers.Customer'
 
 STATIC_URL = 'static/'
 

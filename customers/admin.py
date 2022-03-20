@@ -1,14 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .forms import CustomerCreationForm, CustomerChangeForm
+from .models import Customer
 
 
-class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
-    model = CustomUser
+class CustomerAdmin(UserAdmin):
+    add_form = CustomerCreationForm
+    form = CustomerChangeForm
     list_display = ('email', 'balance', 'is_staff', 'is_active',)
     list_filter = ('email', 'balance', 'is_staff', 'is_active',)
     fieldsets = (
@@ -25,4 +24,4 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('balance',)
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Customer, CustomerAdmin)
