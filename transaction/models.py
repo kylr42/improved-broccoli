@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -7,8 +8,16 @@ from django.utils.translation import gettext_lazy as _
 
 class PersonalAccount(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='personal_account')
-    balance = models.DecimalField(_('personal balance'), max_digits=6, decimal_places=2, default=0)
+    customer = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='personal_account'
+    )
+    balance = models.DecimalField(
+        _('personal balance'),
+        max_digits=6, decimal_places=2, default=0,
+        validators=[MinValueValidator(0)]
+    )
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
