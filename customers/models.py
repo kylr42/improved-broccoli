@@ -30,7 +30,6 @@ class CustomerManager(BaseUserManager):
 class Customer(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    balance = models.DecimalField(_('customers balance'), max_digits=6, decimal_places=2, default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

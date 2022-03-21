@@ -3,11 +3,11 @@ from django.urls import path, include, re_path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from .views import TransactionViewSet
-
+from .views import TransactionViewSet, PersonalAccountViewSet
 
 router = routers.DefaultRouter()
 router.register(r'transaction', TransactionViewSet)
+router.register(r'accounts', PersonalAccountViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
