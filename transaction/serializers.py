@@ -38,7 +38,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             payer.save()
             payee.save()
 
-            return Transaction.objects.create(**validated_data).save()
+        return Transaction.objects.create(**validated_data).save()
 
     class Meta:
         model = Transaction
