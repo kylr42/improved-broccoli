@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from django.db import transaction
 
 from .celery import app
-from transaction.models import PersonalAccount, Transaction
+from transaction.models import TransactionAccount, Transaction
 
 
 class AtomicTask(celery.Task):
@@ -17,17 +17,23 @@ class AtomicTask(celery.Task):
                 transfer.save()
                 return super().__call__(*args, **kwargs)
 
-        except ValidationError:
+        except ValidationError as e:
+            e_title = e.detail[0].title()
+            transfer.errors = f"{e_title}"
             transfer.status = 2
             transfer.save()
-            raise ValidationError()
+
+            return {
+                "status": "error",
+                "message": f"{e_title}"
+            }
         
 
 @app.task(base=AtomicTask)
 def transaction_handler(payer_id, payee_id, transfer_id, amount):
     import decimal
 
-    account = PersonalAccount.objects.select_for_update()
+    account = TransactionAccount.accounts.select_for_update()
 
     payer = account.get(id=payer_id)
     payee = account.get(id=payee_id)
@@ -36,9 +42,7 @@ def transaction_handler(payer_id, payee_id, transfer_id, amount):
     payee.balance += decimal.Decimal(amount)
 
     if payer.balance < 0:
-        raise ValidationError(
-            code="invalid",
-        )
+        raise ValidationError("Transaction incomplete! Amount invalid")
 
     payer.save()
     payee.save()

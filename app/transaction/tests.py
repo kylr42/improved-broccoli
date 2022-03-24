@@ -3,15 +3,15 @@ from django.db import IntegrityError
 from django.db.transaction import TransactionManagementError
 from django.test import TestCase
 
-from transaction.models import PersonalAccount
+from transaction.models import TransactionAccount
 
 
-class PersonalAccountTests(TestCase):
+class TransactionAccountTests(TestCase):
 
     def test_create_personal_account(self):
         user = get_user_model()
         test_user = user.objects.create_user(email='normal@user.com', password='foo')
-        test_account = PersonalAccount.objects.create(customer=test_user, balance=42.21, is_active=True)
+        test_account = TransactionAccount.objects.create(customer=test_user, balance=42.21, is_active=True)
 
         self.assertEqual(test_account.balance, 42.21)
         self.assertEqual(test_account.customer.id, test_user.id)
@@ -19,10 +19,10 @@ class PersonalAccountTests(TestCase):
         self.assertIsNotNone(test_account.id)
 
         with self.assertRaises(IntegrityError):
-            PersonalAccount.objects.create()
+            TransactionAccount.objects.create()
         with self.assertRaises(ValueError):
-            PersonalAccount.objects.create(customer=42)
+            TransactionAccount.objects.create(customer=42)
         with self.assertRaises(TransactionManagementError):
-            PersonalAccount.objects.create(balance=42.21)
+            TransactionAccount.objects.create(balance=42.21)
         with self.assertRaises(TransactionManagementError):
-            PersonalAccount.objects.create(customer=test_user, balance=-42.21)
+            TransactionAccount.objects.create(customer=test_user, balance=-42.21)

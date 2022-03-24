@@ -8,6 +8,8 @@ services:
       - ./app/:/usr/src/app/
     ports:
       - "8000:8000"
+    environment:
+      - MIGRATIONS=true
     env_file:
       - ./.env
     depends_on:
@@ -30,10 +32,10 @@ services:
       - "5566:5566"
     volumes:
       - ./app/:/usr/src/app
-    env_file:
-      - ./.env
     depends_on:
       - celery
+      - web
+      - redis
   db:
     image: postgres:13.0-alpine
     volumes:

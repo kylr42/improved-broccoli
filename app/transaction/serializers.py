@@ -1,13 +1,13 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework import serializers
 
-from .models import Transaction, PersonalAccount
+from .models import Transaction, TransactionAccount
 
 
-class PersonalAccountSerializer(serializers.ModelSerializer):
+class TransactionAccountSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = PersonalAccount
+        model = TransactionAccount
         fields = ['id', 'customer', 'balance', 'is_active', ]
         read_only_fields = ('id', 'balance', 'is_active')
 
