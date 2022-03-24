@@ -17,7 +17,7 @@ then
     python manage.py migrate
     python manage.py shell -c """
 from django.contrib.auth import get_user_model;
-get_user_model().objects.create_superuser(username='admin', password='password')
+get_user_model().objects.create_superuser(email='admin@gmail.com', password='password')
     """
 fi
 

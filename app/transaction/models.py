@@ -43,6 +43,7 @@ class Transaction(models.Model):
     payee = models.ForeignKey(TransactionAccount, on_delete=models.PROTECT, related_name='receiving')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
+    errors = models.CharField(blank=True, max_length=256)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
