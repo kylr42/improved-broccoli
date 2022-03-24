@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import Transaction, PersonalAccount
+from .models import Transaction, TransactionAccount
 
 
-class PersonalAccountAdmin(admin.ModelAdmin):
+class TransactionAccountAdmin(admin.ModelAdmin):
     list_display = ('id', 'customer', 'balance', 'is_active',)
     list_filter = ('id', 'customer', 'balance', 'is_active',)
 
@@ -19,6 +19,6 @@ class TransactionAdmin(admin.ModelAdmin):
     ordering = ('created',)
 
 
-admin.site.register(PersonalAccount, PersonalAccountAdmin)
+admin.site.register(TransactionAccount, TransactionAccountAdmin)
 admin.site.register(Transaction, TransactionAdmin)
 

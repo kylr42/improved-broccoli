@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from django.db import transaction
 
 from .celery import app
-from transaction.models import PersonalAccount, Transaction
+from transaction.models import TransactionAccount, Transaction
 
 
 class AtomicTask(celery.Task):
@@ -27,7 +27,7 @@ class AtomicTask(celery.Task):
 def transaction_handler(payer_id, payee_id, transfer_id, amount):
     import decimal
 
-    account = PersonalAccount.objects.select_for_update()
+    account = TransactionAccount.objects.select_for_update()
 
     payer = account.get(id=payer_id)
     payee = account.get(id=payee_id)
